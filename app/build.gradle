@@ -1,4 +1,4 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 
 dependencies {
     compile 'com.android.support:multidex:1.0.0'
