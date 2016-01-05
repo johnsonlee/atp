@@ -101,3 +101,7 @@
     public static *** d(...);
 }
 
+-dontwarn android.support.**
+-keep class android.support.** { *; }
+-keep interface android.support.** { *; }
+

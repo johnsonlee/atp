@@ -5,7 +5,7 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion '23.0.2'
     defaultPublishConfig project.VERSION.endsWith('-SNAPSHOT') ? 'debug' : 'release'
 
@@ -21,10 +21,12 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "GIT_REVISION", "\"${'git rev-parse HEAD'.execute().text.trim()}\""
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "GIT_REVISION", "\"${'git rev-parse HEAD'.execute().text.trim()}\""
         }
     }
 }
