@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+    compile 'com.android.support:multidex:1.0.0'
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion '23.0.2'
+    defaultPublishConfig project.VERSION.endsWith('-SNAPSHOT') ? 'debug' : 'release'
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 22
+        versionCode 1
+        versionName '0.0.1'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.fork = true
+    options.forkOptions.jvmArgs += ["-Xverify:none"]
+}
+
+tasks.withType(Test) {
+    systemProperty "robolectric.logging", "stdout"
+}
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.project {
+                groupId project.GROUP_ID
+                artifactId project.ARTIFACT_ID
+                version project.VERSION
+            }
+            repository(url: project.RELEASE_REPOSITORY_URL) {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+            snapshotRepository(url: project.SNAPSHOT_REPOSITORY_URL) {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+        }
+    }
+}
+
