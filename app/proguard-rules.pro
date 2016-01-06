@@ -1,8 +1,6 @@
 # Add project specific ProGuard rules here.
 # By default, the flags in this file are appended to flags specified
-# in /Users/michaelzuo/Library/Android/sdk/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
+# in ${ANDROID_HOME}/tools/proguard/proguard-android.txt
 #
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
@@ -101,6 +99,14 @@
     public static *** d(...);
 }
 
+-dontwarn org.**
+-keep class org.** { *; }
+-keep interface org.** { *; }
+
 -dontwarn android.support.**
 -keep class android.support.** { *; }
 -keep interface android.support.** { *; }
+
+-dontwarn com.android.**
+-keep class com.android.** { *; }
+-keep interface com.android.** { *; }
