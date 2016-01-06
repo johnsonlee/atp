@@ -19,15 +19,34 @@ android {
 
     buildTypes {
         debug {
+            ndk {
+                abiFilter 'armeabi'
+            }
+
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "GIT_REVISION", "\"${'git rev-parse HEAD'.execute().text.trim()}\""
         }
         release {
+            ndk {
+                abiFilter 'armeabi'
+            }
+
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "GIT_REVISION", "\"${'git rev-parse HEAD'.execute().text.trim()}\""
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+    }
+
+    dexOptions {
+        javaMaxHeapSize '4g'
+        preDexLibraries true
     }
 }
 
