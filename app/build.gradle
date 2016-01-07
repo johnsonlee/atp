@@ -75,23 +75,3 @@ tasks.withType(Test) {
     systemProperty "robolectric.logging", "stdout"
 }
 
-apply plugin: 'maven'
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            pom.project {
-                groupId project.GROUP_ID
-                artifactId project.ARTIFACT_ID
-                version project.VERSION
-            }
-            repository(url: project.RELEASE_REPOSITORY_URL) {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-            snapshotRepository(url: project.SNAPSHOT_REPOSITORY_URL) {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-        }
-    }
-}
-

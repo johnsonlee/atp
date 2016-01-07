@@ -70,6 +70,26 @@ uploadArchives {
                 artifactId project.ARTIFACT_ID
                 version project.VERSION
             }
+
+            pom.withXml {
+                def root = it.asElement()
+                def dependencies = root.getElementsByTagName('dependency')
+
+                for (int i = 0; i < dependencies.length; i++) {
+                    def dependency = dependencies.item(i)
+                    def groupId = dependency.getElementsByTagName('groupId').item(0)
+                    def version = dependency.getElementsByTagName('version').item(0)
+
+                    if (project.parent.name.equals(groupId.textContent)) {
+                        groupId.setTextContent(project.GROUP_ID)
+                    }
+
+                    if ('unspecified'.equals(version.textContent)) {
+                        version.setTextContent(project.VERSION)
+                    }
+                }
+            }
+
             repository(url: project.RELEASE_REPOSITORY_URL) {
                 authentication(userName: ossrhUsername, password: ossrhPassword)
             }
